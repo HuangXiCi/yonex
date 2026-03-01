@@ -9,10 +9,9 @@
             "type": "cppdbg",
             "request": "launch",
             "sourceFileMap": {
-                "sbi": "${workspaceFolder}/sbi",
                 "kernel": "{workspaceFolder}/kernel"
             },
-            "program": "${workspaceFolder}/build/sbi/sbi.elf",
+            "program": "${workspaceFolder}/build/kernel/yonex.elf",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

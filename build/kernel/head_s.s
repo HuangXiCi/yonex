@@ -8,15 +8,12 @@
 .globl _start
 _start:
 
- csrw sie, zero
-
-
  la sp, stacks_start
  li t0, 4096
  add sp, sp, t0
 
 
- tail kernel_main
+ tail _func
 
 .section .data
 .align 12
