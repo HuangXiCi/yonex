@@ -8,7 +8,7 @@ _start:
 	add sp, sp, t0
 
 	/* goto C */
-	tail _func
+	j _func
 
 .section .data
 .align  12

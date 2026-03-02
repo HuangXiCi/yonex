@@ -9,9 +9,9 @@
             "type": "cppdbg",
             "request": "launch",
             "sourceFileMap": {
-                "kernel": "{workspaceFolder}/kernel"
+                "src": "{workspaceFolder}/src"
             },
-            "program": "${workspaceFolder}/build/kernel/yonex.elf",
+            "program": "${workspaceFolder}/build/yonex.elf",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
