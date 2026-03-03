@@ -31,7 +31,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "miDebuggerPath": "/opt/riscv/bin/riscv64-unknown-elf-gdb"
+            "miDebuggerPath": "${userHome}/riscv/bin/riscv64-unknown-elf-gdb"
         }
     ]
 }
