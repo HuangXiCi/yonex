@@ -1,17 +1,15 @@
 .section ".text.boot"
 
+.globl main
 .globl _start
+
+
 _start:
 	/* set the stack of SP, size 4KB */
-	la sp, stacks_start
-	li t0, 4096
-	add sp, sp, t0
+	la sp, __stack_top
 
 	/* goto C */
-	j _func
+	call main
 
-.section .data
-.align  12
-.global stacks_start
-stacks_start:
-	.skip 4096
+_spin:
+	j _spin

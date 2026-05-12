@@ -3,7 +3,6 @@ ENTRY(_start)
 
 SECTIONS
 {
-
 	. = 0x80000000,
 
 	.text.boot : { *(.text.boot) }
@@ -11,3 +10,4 @@ SECTIONS
 	.data : { *(.data) }
 }
 
+__stack_top = 0x80020000;
