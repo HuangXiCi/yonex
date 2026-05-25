@@ -45,20 +45,6 @@ static void put_spaces(int n)
     }
 }
 
-/* 如果串口终端不支持 ANSI 清屏，把这里改成 0 */
-#define USE_ANSI_CLEAR 1
-
-static void screen_clear(void)
-{
-#if USE_ANSI_CLEAR
-    uart_putstr("\033[2J\033[H");
-#else
-    for (int i = 0; i < 30; i++) {
-        uart_putstr("\n");
-    }
-#endif
-}
-
 /* ================= random ================= */
 
 static uint32_t rand32(uint32_t *rng_state)

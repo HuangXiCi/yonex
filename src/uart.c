@@ -12,7 +12,7 @@ int uart_getch() {
     return ch;
 }
 
-void uart_putstr(char *s) {
+void uart_putstr(const char *s) {
     for (;*s;s++) {
         if (*s == '\n') { uart_putch('\r'); }
         uart_putch(*s);
