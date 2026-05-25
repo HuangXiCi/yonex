@@ -54,7 +54,7 @@ static void screen_clear(void)
     uart_putstr("\033[2J\033[H");
 #else
     for (int i = 0; i < 30; i++) {
-        uart_putstr("\r\n");
+        uart_putstr("\n");
     }
 #endif
 }
@@ -148,18 +148,20 @@ static void draw_cell(uint32_t v)
 
 static void draw_border(void)
 {
-    uart_putstr("+------+------+------+------+\r\n");
+    uart_putstr("+------+------+------+------+\n");
 }
 
-static void draw_board(uint32_t board[4][4], uint32_t score)
+static void draw_board(uint32_t board[4][4], uint32_t score, uint32_t best_score)
 {
     screen_clear();
 
-    uart_putstr("2048\r\n");
-    uart_putstr("W/A/S/D move, Q quit\r\n");
+    uart_putstr("2048\n");
+    uart_putstr("W/A/S/D move, Q quit, R restart.\n");
     uart_putstr("Score: ");
     uart_put_uint(score);
-    uart_putstr("\r\n\r\n");
+    uart_putstr("\nBest Score: ");
+    uart_put_uint(best_score);
+    uart_putstr("\n\n");
 
     draw_border();
 
@@ -171,7 +173,7 @@ static void draw_board(uint32_t board[4][4], uint32_t score)
             uart_putch('|');
         }
 
-        uart_putstr("\r\n");
+        uart_putstr("\n");
         draw_border();
     }
 }
@@ -387,15 +389,28 @@ static int read_key_ignore_enter(void)
 
 void game_2048(void)
 {
-    uint32_t rng_state = 1;
+    uint32_t best_score = 0;
     uint32_t score = 0;
     uint32_t board[4][4];
+    uint32_t rng_state = 1;
+    uint32_t seed = 0;
+START:
+    best_score = (best_score < score) ? score : best_score;
+
+    // initial board
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            board[i][j] = 0;
+        }
+    }
+
     board_clear(board, &score);
 
-    uart_putstr("\r\nPress any key to seed random...\r\n");
+    screen_clear();
+    uart_putstr("\nPress any key to seed random...\n");
 
-    int first_key = uart_getch();
-    rand_seed((uint32_t)first_key, &rng_state);
+    seed = uart_getch();
+    rand_seed(seed, &rng_state);
 
     spawn_tile(board, &rng_state);
     spawn_tile(board, &rng_state);
@@ -403,30 +418,32 @@ void game_2048(void)
     int won_printed = 0;
 
     while (1) {
-        draw_board(board, score);
+        draw_board(board, score, best_score);
 
         if (!can_move(board)) {
-            uart_putstr("\r\nGame Over!\r\n");
+            uart_putstr("\nGame Over!\n");
             uart_putstr("Final score: ");
             uart_put_uint(score);
-            uart_putstr("\r\n");
+            uart_putstr("\n");
             break;
         }
 
         if (has_2048(board) && !won_printed) {
-            uart_putstr("\r\nYou reached 2048! Continue playing...\r\n");
+            uart_putstr("\nYou reached 2048! Continue playing...\n");
             won_printed = 1;
         }
-
-        uart_putstr("\r\nInput> ");
 
         int ch = read_key_ignore_enter();
 
         rand_seed((uint32_t)ch, &rng_state);
 
         if (ch == 'q' || ch == 'Q') {
-            uart_putstr("\r\nQuit.\r\n");
+            uart_putstr("\nQuit.\n");
             break;
+        }
+
+        if (ch == 'r' || ch == 'R') {
+            goto RESTART;
         }
 
         int moved = handle_input(ch, board, &score);
@@ -435,4 +452,10 @@ void game_2048(void)
             spawn_tile(board, &rng_state);
         }
     }
+
+    uart_putstr("Press any key to restart game...\n");
+    if(uart_getch()) {;}
+RESTART:
+    screen_clear();
+    goto START;
 }
