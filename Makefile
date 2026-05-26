@@ -1,5 +1,5 @@
 GNU ?= riscv64-unknown-elf
-COPS += -save-temps=obj -g -O0 -Wall -fno-builtin -nostdlib -nostdinc -mcmodel=medany -mabi=ilp32 -march=rv32i -fno-PIE -fomit-frame-pointer
+COPS += -save-temps=obj -g -O2 -Wall -fno-builtin -nostdlib -nostdinc -mcmodel=medany -mabi=ilp32 -march=rv32i -fno-PIE -fomit-frame-pointer
 
 BUILD_DIR = build
 SRC_DIR = src

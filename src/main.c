@@ -1,11 +1,19 @@
 #include "uart.h"
 // #include "data.h"
 
-void game_2048(void);
+// void game_2048(void);
+
+// int main()
+// {
+//   game_2048();
+//   return 0;
+// }
+
+void donut(void);
 
 int main()
 {
-  game_2048();
+  donut();
   return 0;
 }
 
