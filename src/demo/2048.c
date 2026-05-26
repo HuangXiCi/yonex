@@ -1,4 +1,4 @@
-#include "uart.h"
+#include <uart.h>
 
 typedef unsigned int    uint32_t;
 
@@ -373,7 +373,7 @@ static int read_key_ignore_enter(void)
     return ch;
 }
 
-void game_2048(void)
+int main()
 {
     uint32_t best_score = 0;
     uint32_t score = 0;
@@ -381,6 +381,7 @@ void game_2048(void)
     uint32_t rng_state = 1;
     uint32_t seed = 0;
 START:
+    screen_reset();
     best_score = (best_score < score) ? score : best_score;
 
     // initial board
@@ -442,6 +443,6 @@ START:
     uart_putstr("Press any key to restart game...\n");
     if(uart_getch()) {;}
 RESTART:
-    screen_clear();
     goto START;
+    return 0;
 }

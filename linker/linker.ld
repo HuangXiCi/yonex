@@ -19,4 +19,4 @@ SECTIONS
 	.bss       : { *(.bss) *(.sbss) }   :data
 }
 
-__stack_top = 0x80020000;
+__stack_top = 0x80018000;

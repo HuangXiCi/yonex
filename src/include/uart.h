@@ -9,5 +9,6 @@ void uart_putch(int ch);
 int uart_getch();
 void uart_putstr(const char *s);
 static inline void screen_clear() {uart_putstr("\033[H");}
+static inline void screen_reset() {uart_putstr("\033[2J");}
 
 #endif

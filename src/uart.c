@@ -1,5 +1,5 @@
-#include "io.h"
-#include "uart.h"
+#include <io.h>
+#include <uart.h>
 
 void uart_putch(int ch) {
     while (inb(UART_TX_DATA) != 0) {;}
