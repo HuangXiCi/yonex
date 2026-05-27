@@ -444,7 +444,8 @@ START:
     int ch;
     do {
         ch = read_key_ignore_enter();
-    } while (ch == 'r' || ch == 'R');
+        if (ch == 'r' || ch == 'R') { break; }
+    } while (1);
     
 RESTART:
     goto START;
