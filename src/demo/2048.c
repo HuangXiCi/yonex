@@ -440,8 +440,12 @@ START:
         }
     }
 
-    uart_putstr("Press any key to restart game...\n");
-    if(uart_getch()) {;}
+    uart_putstr("Press R to restart game...\n");
+    int ch;
+    do {
+        ch = read_key_ignore_enter();
+    } while (ch == 'r' || ch == 'R');
+    
 RESTART:
     goto START;
     return 0;
